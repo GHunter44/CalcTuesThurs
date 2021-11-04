@@ -7,7 +7,8 @@ import javafx.scene.control.TextField;
 import org.controlsfx.control.action.Action;
 
 public class Calcwindow {
-    private int storedNumber;
+    private double storedNumber;
+    private OperatorType lastOp;
     @FXML
     private TextField numberDisplay;
 
@@ -25,6 +26,7 @@ public class Calcwindow {
         var numbertext = numberDisplay.getText();
         storedNumber = Integer.parseInt(numbertext);
         numberDisplay.clear();
+        lastOp = OperatorType.Add;
     }
 
     @FXML
@@ -32,28 +34,34 @@ public class Calcwindow {
         var numbertext = numberDisplay.getText();
         storedNumber = Integer.parseInt(numbertext);
         numberDisplay.clear();
+        lastOp = OperatorType.Subtract;
     }
 
     public void multiplyButtonPressed(){
         var numbertext = numberDisplay.getText();
         storedNumber = Integer.parseInt(numbertext);
         numberDisplay.clear();
+        lastOp = OperatorType.Multiply;
     }
 
     public void divideButtonPressed(){
         var numbertext = numberDisplay.getText();
         storedNumber = Integer.parseInt(numbertext);
         numberDisplay.clear();
+        lastOp = OperatorType.Divide;
     }
 
     @FXML
     public void equalButtonPressed(){
-       var currentNumber = Integer.parseInt(numberDisplay.getText()); //Combining it all into one like Instead of splitting it like done above.
-       var addSum = currentNumber + storedNumber;
-       //var subtractSum = storedNumber - currentNumber;
-       //var multiplySum = currentNumber * storedNumber;
-       //var divideSum = storedNumber/currentNumber;
-       numberDisplay.setText(""+ addSum); //Uses a blank string to turn the Sum Int into a String
+        double result = 0.0;
+        double currentNumber = Integer.parseInt(numberDisplay.getText()); //Combining it all into one like Instead of splitting it like done above.
+        switch (lastOp){
+            case Add -> result = storedNumber + currentNumber;
+            case Subtract -> result = storedNumber - currentNumber;
+            case Multiply -> result = storedNumber * currentNumber;
+            case Divide -> result = storedNumber/currentNumber;
+        }
+       numberDisplay.setText(""+ result); //Uses a blank string to turn the result double into a String
     }
 
 
